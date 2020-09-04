@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: sample-service-with-access-control
+  profiles:
+    active: ${DBS_ACTIVE_PROFILE:live}
+backbase:
+  web:
+    security:
+      enabled: true
+  usercontext:
+    jwtTokenExpiration: 300
+    signatureAndEncryption:
+      key:
+        type: ENV
+        value: USERCTX_KEY
+  communication:
+    services:
+      pandp:
+        accesscontrol:
+          query:
+            serviceId: access-control
+        user:
+          query:
+            serviceId: user-manager
+logging:
+  level:
+    com.backbase: INFO
+    org.springframework: INFO
+
+sso:
+  jwt:
+    internal:
+      type: signed
+      signature:
+        key:
+          type: ENV
+          value: SIG_SECRET_KEY
